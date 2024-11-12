@@ -1,0 +1,79 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>Movies App</title>-->
+<!--  <link rel="stylesheet" href="styles.css">-->
+<!--</head>-->
+<!--<body>-->
+<!--<header>-->
+<!--  <h1>Movies App</h1>-->
+<!--  <input type="text" id="searchBar" placeholder="Search for movies..." />-->
+<!--  <ul id="suggestions"></ul>-->
+<!--</header>-->
+<!--<main>-->
+<!--  <section id="moviesGrid"></section>-->
+<!--</main>-->
+<!--<div id="movieModal" class="modal hidden">-->
+<!--  <div class="modal-content">-->
+<!--    <span class="close">&times;</span>-->
+<!--    <h2 id="movieTitle"></h2>-->
+<!--    <p id="movieSynopsis"></p>-->
+<!--    <p id="movieDetails"></p>-->
+<!--    <p id="movieCast"></p>-->
+<!--    <div id="movieReviews"></div>-->
+<!--    <div id="movieTrailer"></div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<script src="scripts.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movies App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1>Movies App</h1>
+  <input type="text" id="searchBar" placeholder="Search for movies..." />
+  <nav>
+    <a href="watchlist.html" id="watchlistLink">View Watchlist</a>
+  </nav>
+  <div class="sort-container">
+    <label for="sortMovies">Sort by:</label>
+    <select id="sortMovies">
+      <option value="popularity.desc">Popularity (High to Low)</option>
+      <option value="popularity.asc">Popularity (Low to High)</option>
+      <option value="release_date.desc">Release Date (Newest)</option>
+      <option value="release_date.asc">Release Date (Oldest)</option>
+      <option value="vote_average.desc">Rating (High to Low)</option>
+      <option value="vote_average.asc">Rating (Low to High)</option>
+    </select>
+  </div>
+</header>
+<main>
+  <section id="moviesGrid"></section>
+</main>
+<div id="movieModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 id="movieTitle"></h2>
+    <p id="movieSynopsis"></p>
+    <p id="movieDetails"></p>
+    <div id="movieCast"></div>
+    <button id="addToWatchlist">Add to Watchlist</button>
+  </div>
+</div>
+
+<script src="scripts.js"></script>
+</body>
+</html>
+

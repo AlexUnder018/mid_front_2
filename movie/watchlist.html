@@ -1,0 +1,101 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>Watchlist</title>-->
+<!--  <link rel="stylesheet" href="styles.css">-->
+<!--</head>-->
+<!--<body>-->
+<!--<header>-->
+<!--  <h1>Your Watchlist</h1>-->
+<!--  <nav>-->
+<!--    <a href="index.html" id="backToHome">Back to Home</a>-->
+<!--  </nav>-->
+<!--</header>-->
+<!--<main>-->
+<!--  <section id="watchlistGrid"></section>-->
+<!--</main>-->
+<!--<script>-->
+<!--  const watchlistGrid = document.getElementById('watchlistGrid');-->
+
+<!--  function loadWatchlist() {-->
+<!--    const watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];-->
+<!--    if (watchlist.length === 0) {-->
+<!--      watchlistGrid.innerHTML = '<p>No movies in your watchlist.</p>';-->
+<!--    } else {-->
+<!--      watchlistGrid.innerHTML = watchlist-->
+<!--              .map(movie => `-->
+<!--                <div class="movie-card">-->
+<!--                    <img src="https://image.tmdb.org/t/p/w200/${movie.poster_path}" alt="${movie.title}" />-->
+<!--                    <h3>${movie.title}</h3>-->
+<!--                    <p>${movie.release_date}</p>-->
+<!--                </div>-->
+<!--              `)-->
+<!--              .join('');-->
+<!--    }-->
+<!--  }-->
+
+<!--  loadWatchlist();-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Watchlist</title>
+  <link rel="stylesheet" href="watchlist.css">
+</head>
+<body>
+<header>
+  <h1>Your Watchlist</h1>
+  <nav>
+    <a href="index.html" id="backToHome">Back to Home</a>
+  </nav>
+</header>
+<main>
+  <section id="watchlistGrid">
+    <p id="noMoviesMessage" style="text-align: center; color: #666;">Loading your watchlist...</p>
+  </section>
+</main>
+
+<script>
+  const watchlistGrid = document.getElementById('watchlistGrid');
+  const noMoviesMessage = document.getElementById('noMoviesMessage');
+
+  function loadWatchlist() {
+    const watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
+    if (watchlist.length === 0) {
+      noMoviesMessage.textContent = 'No movies in your watchlist.';
+    } else {
+      noMoviesMessage.style.display = 'none'; // Hide message if movies are found
+      watchlistGrid.innerHTML = watchlist
+              .map(movie => `
+                <div class="movie-card">
+                    <img src="https://image.tmdb.org/t/p/w200/${movie.poster_path}" alt="${movie.title}" />
+                    <h3>${movie.title}</h3>
+                    <p>${movie.release_date}</p>
+                    <button class="remove-button" onclick="removeFromWatchlist(${movie.id})">Remove</button>
+                </div>
+              `)
+              .join('');
+    }
+  }
+
+  function removeFromWatchlist(movieId) {
+    let watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
+    watchlist = watchlist.filter(movie => movie.id !== movieId); // Remove the movie with the given ID
+    localStorage.setItem('watchlist', JSON.stringify(watchlist)); // Update localStorage
+    loadWatchlist(); // Reload the watchlist to reflect the changes
+  }
+
+  loadWatchlist();
+</script>
+</body>
+</html>
