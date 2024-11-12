@@ -1,87 +1,5 @@
-// const apiKey = "8ab2b02341da942af0ecc07771e94b82"; // Replace with your OpenWeatherMap API key
-// const searchInput = document.getElementById('search');
-// const searchBtn = document.getElementById('search-btn');
-// const currentLocationBtn = document.getElementById('current-location-btn');
-// const unitToggle = document.getElementById('unit-toggle');
-// let isCelsius = true;
-//
-// const fetchWeather = async (city) => {
-//     try {
-//         const unit = isCelsius ? 'metric' : 'imperial';
-//         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${unit}&appid=${apiKey}`);
-//         const data = await response.json();
-//         displayCurrentWeather(data);
-//         fetchForecast(data.coord.lat, data.coord.lon);
-//     } catch (error) {
-//         alert('City not found');
-//     }
-// };
-//
-// const fetchForecast = async (lat, lon) => {
-//     try {
-//         const unit = isCelsius ? 'metric' : 'imperial';
-//         const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`);
-//         const data = await response.json();
-//         displayForecast(data.list);
-//     } catch (error) {
-//         alert('Error fetching forecast');
-//     }
-// };
-//
-// const displayCurrentWeather = (data) => {
-//     document.getElementById('city-name').textContent = data.name;
-//     document.getElementById('temperature').textContent = `Temperature: ${data.main.temp}°${isCelsius ? 'C' : 'F'}`;
-//     document.getElementById('humidity').textContent = `Humidity: ${data.main.humidity}%`;
-//     document.getElementById('wind-speed').textContent = `Wind Speed: ${data.wind.speed} ${isCelsius ? 'm/s' : 'mph'}`;
-//     document.getElementById('condition').textContent = data.screenshots[0].description;
-//     document.getElementById('screenshots-icon').src = `http://openweathermap.org/img/wn/${data.screenshots[0].icon}.png`;
-// };
-//
-// const displayForecast = (forecast) => {
-//     const forecastContainer = document.getElementById('forecast-cards');
-//     forecastContainer.innerHTML = '';
-//     const dailyForecast = forecast.filter((_, index) => index % 8 === 0);
-//     dailyForecast.forEach(day => {
-//         const card = document.createElement('div');
-//         card.className = 'forecast-card';
-//         card.innerHTML = `
-//       <p>${new Date(day.dt_txt).toLocaleDateString()}</p>
-//       <p>High: ${day.main.temp_max}°</p>
-//       <p>Low: ${day.main.temp_min}°</p>
-//       <img src="http://openweathermap.org/img/wn/${day.screenshots[0].icon}.png" alt="${day.screenshots[0].description}">
-//     `;
-//         forecastContainer.appendChild(card);
-//     });
-// };
-//
-// const getCurrentLocationWeather = () => {
-//     navigator.geolocation.getCurrentPosition(async (position) => {
-//         const { latitude, longitude } = position.coords;
-//         fetchWeatherByCoords(latitude, longitude);
-//     }, () => {
-//         alert('Unable to access location');
-//     });
-// };
-//
-// const fetchWeatherByCoords = async (lat, lon) => {
-//     try {
-//         const unit = isCelsius ? 'metric' : 'imperial';
-//         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`);
-//         const data = await response.json();
-//         displayCurrentWeather(data);
-//         fetchForecast(lat, lon);
-//     } catch (error) {
-//         alert('Error fetching screenshots for current location');
-//     }
-// };
-//
-// searchBtn.addEventListener('click', () => fetchWeather(searchInput.value));
-// currentLocationBtn.addEventListener('click', getCurrentLocationWeather);
-// unitToggle.addEventListener('click', () => {
-//     isCelsius = !isCelsius;
-//     unitToggle.textContent = isCelsius ? 'Switch to Fahrenheit' : 'Switch to Celsius';
-// });
-const apiKey = "7908168df347cd95a62e7df68d1fdc51"; // Replace with your OpenWeatherMap API key
+
+const apiKey = "8ab2b02341da942af0ecc07771e94b82"; // Replace with your OpenWeatherMap API key
 const searchInput = document.getElementById('search');
 const searchBtn = document.getElementById('search-btn');
 const currentLocationBtn = document.getElementById('current-location-btn');
@@ -99,7 +17,7 @@ const fetchWeather = async (city) => {
         lastCity = city; // Store the last searched city
         lastCoords = null; // Clear coordinates
         displayCurrentWeather(data);
-        fetchForecast(data.coord.lat, data.coord.lon);
+        await fetchForecast(data.coord.lat, data.coord.lon);
     } catch (error) {
         alert('City not found');
     }
@@ -108,13 +26,16 @@ const fetchWeather = async (city) => {
 // Fetch screenshots for coordinates (used for current location)
 const fetchWeatherByCoords = async (lat, lon) => {
     try {
+        console.log(lat + " " + lon);
         const unit = isCelsius ? 'metric' : 'imperial';
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`);
         const data = await response.json();
         lastCoords = { lat, lon }; // Store the last coordinates
-        lastCity = null; // Clear city
+        lastCity = null; // Clear city\
+        console.log(1)
         displayCurrentWeather(data);
-        fetchForecast(lat, lon);
+        console.log(2)
+        await fetchForecast(lat, lon);
     } catch (error) {
         alert('Error fetching screenshots for current location');
     }
@@ -124,7 +45,9 @@ const fetchWeatherByCoords = async (lat, lon) => {
 const fetchForecast = async (lat, lon) => {
     try {
         const unit = isCelsius ? 'metric' : 'imperial';
+        console.log(unit)
         const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`);
+        console.log(response);
         const data = await response.json();
         console.log(data.list)
         displayForecast(data.list);
