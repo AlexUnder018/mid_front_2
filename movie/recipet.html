@@ -2,9 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe App</title>
+  <link rel="stylesheet" href="recipet.css">
 </head>
 <body>
-$END$
+<header>
+  <div class="hamburger-menu">
+    <button id="hamburgerBtn" class="hamburger-btn">☰</button>
+    <nav id="sliderMenu" class="slider-menu hidden">
+      <ul>
+        <li><a href="index.html">Movies App</a></li>
+        <li><a href="weather.html">Weather App</a></li>
+        <li><a href="recipet.html">Recipe App</a></li>
+      </ul>
+    </nav>
+  </div>
+  <h1>Recipe App</h1>
+  <input type="text" id="searchBar" placeholder="Search for recipes...">
+  <button id="searchBtn">Search</button>
+  <button id="favoritesBtn">Favorites</button>
+</header>
+
+<main>
+  <section id="recipesGrid"></section>
+</main>
+
+<div id="modal" class="hidden">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <h2 id="recipeTitle"></h2>
+    <p id="recipeDesc"></p>
+    <ul id="ingredients"></ul>
+    <ol id="instructions"></ol>
+    <p id="nutrition"></p>
+
+  </div>
+</div>
+
+<script src="recipet.js"></script>
 </body>
 </html>

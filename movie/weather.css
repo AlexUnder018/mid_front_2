@@ -1,0 +1,129 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f8ff;
+}
+
+.weather-app {
+    text-align: center;
+    padding: 20px;
+}
+
+header {
+    background-color: #008cba;
+    color: white;
+    padding: 10px;
+}
+.container{
+    max-width: 1000px;
+    margin: 0 auto;
+    /*padding: 20px;*/
+}
+.search-bar {
+    margin: 20px 0;
+}
+
+.search-bar input {
+    padding: 10px;
+    width: 200px;
+}
+
+.search-bar button {
+    padding: 10px;
+}
+
+#current-weather, #forecast {
+    margin: 20px 0;
+}
+
+.weather-details {
+    font-size: 1.2em;
+}
+
+#forecast-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.forecast-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    width: 150px;
+    background-color: #fff;
+}
+
+.forecast-card img {
+    width: 50px;
+    height: 50px;
+}
+
+footer {
+    margin-top: 20px;
+}
+.hamburger-menu {
+    position: relative;
+}
+
+.hamburger-btn {
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000;
+}
+
+.hamburger-btn:hover {
+    color: #007bff;
+}
+
+.slider-menu {
+    position: fixed;
+    top: 0;
+    left: -250px; /* Hidden initially */
+    width: 250px;
+    height: 100%;
+    background-color: #282828;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: left 0.3s ease;
+    z-index: 999;
+    padding-top: 4rem;
+}
+
+.slider-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.slider-menu ul li {
+    padding: 1rem;
+    text-align: center;
+}
+
+.slider-menu ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    display: block;
+}
+
+.slider-menu ul li a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.slider-menu.hidden {
+    left: -250px; /* Keep it hidden */
+}
+
+.slider-menu.visible {
+    left: 0; /* Slide in */
+}

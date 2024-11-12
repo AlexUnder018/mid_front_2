@@ -1,45 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--  <meta charset="UTF-8">-->
-<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--  <title>Watchlist</title>-->
-<!--  <link rel="stylesheet" href="styles.css">-->
-<!--</head>-->
-<!--<body>-->
-<!--<header>-->
-<!--  <h1>Your Watchlist</h1>-->
-<!--  <nav>-->
-<!--    <a href="index.html" id="backToHome">Back to Home</a>-->
-<!--  </nav>-->
-<!--</header>-->
-<!--<main>-->
-<!--  <section id="watchlistGrid"></section>-->
-<!--</main>-->
-<!--<script>-->
-<!--  const watchlistGrid = document.getElementById('watchlistGrid');-->
-
-<!--  function loadWatchlist() {-->
-<!--    const watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];-->
-<!--    if (watchlist.length === 0) {-->
-<!--      watchlistGrid.innerHTML = '<p>No movies in your watchlist.</p>';-->
-<!--    } else {-->
-<!--      watchlistGrid.innerHTML = watchlist-->
-<!--              .map(movie => `-->
-<!--                <div class="movie-card">-->
-<!--                    <img src="https://image.tmdb.org/t/p/w200/${movie.poster_path}" alt="${movie.title}" />-->
-<!--                    <h3>${movie.title}</h3>-->
-<!--                    <p>${movie.release_date}</p>-->
-<!--                </div>-->
-<!--              `)-->
-<!--              .join('');-->
-<!--    }-->
-<!--  }-->
-
-<!--  loadWatchlist();-->
-<!--</script>-->
-<!--</body>-->
-<!--</html>-->
 
 
 
@@ -68,9 +26,55 @@
 <script>
   const watchlistGrid = document.getElementById('watchlistGrid');
   const noMoviesMessage = document.getElementById('noMoviesMessage');
+  const movieModal = document.getElementById('movieModal');
+  const modalTitle = document.getElementById('movieTitle');
+  const modalSynopsis = document.getElementById('movieSynopsis');
+  const modalDetails = document.getElementById('movieDetails');
+  const modalCast = document.createElement('div'); // For cast details
+  const modalTrailer = document.createElement('div'); // For trailer
+  async function showMovieDetails(id) {
+    try {
+      const res = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&append_to_response=credits,reviews,videos`);
+      const movie = await res.json();
+      currentMovie = movie;
+      // Populate basic movie details
+      modalTitle.textContent = movie.title;
+      modalSynopsis.textContent = movie.overview || 'No synopsis available.';
+      modalDetails.textContent = `Rating: ${movie.vote_average} | Runtime: ${movie.runtime || 'N/A'} mins`;
+
+      // Populate cast and crew
+      const cast = movie.credits.cast.slice(0, 5).map(actor => actor.name).join(', ');
+      modalCast.innerHTML = `<strong>Cast:</strong> ${cast || 'Not available.'}`;
+
+      // Populate reviews
+      // const reviews = movie.reviews.results
+      //     .slice(0, 3)
+      //     .map(review => `<p><strong>${review.author}</strong>: ${review.content}</p>`)
+      //     .join('');
+      // modalReviews.innerHTML = `<strong>User Reviews:</strong><br>${reviews || 'No reviews available.'}`;
+
+      // Populate trailer
+      const trailer = movie.videos.results.find(video => video.type === 'Trailer');
+      if (trailer) {
+        modalTrailer.innerHTML = `
+        <h4>Trailer</h4>
+        <iframe width="100%" height="315"
+          src="https://www.youtube.com/embed/${trailer.key}"
+          frameborder="0" allowfullscreen>
+        </iframe>`;
+      } else {
+        modalTrailer.innerHTML = '<p>No trailer available.</p>';
+      }
+
+      movieModal.classList.remove('hidden');
+    } catch (error) {
+      console.error('Error fetching movie details:', error);
+    }
+  }
 
   function loadWatchlist() {
     const watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
+    const movie_card = document.getElementsByClassName('movie-card')
     if (watchlist.length === 0) {
       noMoviesMessage.textContent = 'No movies in your watchlist.';
     } else {

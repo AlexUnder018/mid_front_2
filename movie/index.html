@@ -1,35 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--  <meta charset="UTF-8">-->
-<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--  <title>Movies App</title>-->
-<!--  <link rel="stylesheet" href="styles.css">-->
-<!--</head>-->
-<!--<body>-->
-<!--<header>-->
-<!--  <h1>Movies App</h1>-->
-<!--  <input type="text" id="searchBar" placeholder="Search for movies..." />-->
-<!--  <ul id="suggestions"></ul>-->
-<!--</header>-->
-<!--<main>-->
-<!--  <section id="moviesGrid"></section>-->
-<!--</main>-->
-<!--<div id="movieModal" class="modal hidden">-->
-<!--  <div class="modal-content">-->
-<!--    <span class="close">&times;</span>-->
-<!--    <h2 id="movieTitle"></h2>-->
-<!--    <p id="movieSynopsis"></p>-->
-<!--    <p id="movieDetails"></p>-->
-<!--    <p id="movieCast"></p>-->
-<!--    <div id="movieReviews"></div>-->
-<!--    <div id="movieTrailer"></div>-->
-<!--  </div>-->
-<!--</div>-->
-
-<!--<script src="scripts.js"></script>-->
-<!--</body>-->
-<!--</html>-->
 
 
 <!DOCTYPE html>
@@ -42,6 +10,16 @@
 </head>
 <body>
 <header>
+  <div class="hamburger-menu">
+    <button id="hamburgerBtn" class="hamburger-btn">☰</button>
+    <nav id="sliderMenu" class="slider-menu hidden">
+      <ul>
+        <li><a href="index.html">Movies App</a></li>
+        <li><a href="weather.html">Weather App</a></li>
+        <li><a href="recipet.html">Recipe App</a></li>
+      </ul>
+    </nav>
+  </div>
   <h1>Movies App</h1>
   <input type="text" id="searchBar" placeholder="Search for movies..." />
   <nav>

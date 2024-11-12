@@ -2,9 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="weather.css">
 </head>
 <body>
-
+<div class="weather-app">
+    <header>
+        <div class="hamburger-menu">
+            <button id="hamburgerBtn" class="hamburger-btn">☰</button>
+            <nav id="sliderMenu" class="slider-menu hidden">
+                <ul>
+                    <li><a href="index.html">Movies App</a></li>
+                    <li><a href="weather.html">Weather App</a></li>
+                    <li><a href="recipet.html">Recipe App</a></li>
+                </ul>
+            </nav>
+        </div>
+        <h1>Weather App</h1>
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Enter city name">
+            <button id="search-btn">Search</button>
+        </div>
+        <button id="current-location-btn">Get Current Location</button>
+    </header>
+    <main>
+        <section id="current-weather">
+            <h2 id="city-name">City</h2>
+            <div class="weather-details">
+                <p id="temperature"></p>
+                <p id="humidity"></p>
+                <p id="wind-speed"></p>
+                <p id="condition"></p>
+                <img id="weather-icon" src="" alt="Weather Icon">
+            </div>
+        </section>
+        <div class="container">
+            <section id="forecast">
+                <h2>5-Day Forecast</h2>
+                <div id="forecast-cards"></div>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <button id="unit-toggle">Switch to Fahrenheit</button>
+    </footer>
+</div>
+<script src="weather.js"></script>
 </body>
 </html>

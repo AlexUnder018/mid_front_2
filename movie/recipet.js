@@ -1,61 +1,95 @@
-const API_KEY = 'e99eb229d9834c86a47a5550141b4811 ';
-const recipeGrid = document.getElementById('recipeGrid');
-const searchInput = document.getElementById('searchInput');
-const recipeModal = document.getElementById('recipeModal');
-const recipeDetails = document.getElementById('recipeDetails');
+
+const apiKey = "bb4bce81a58e40d5afa4cf14e20baedf";
+const searchBar = document.getElementById('searchBar');
+const searchBtn = document.getElementById('searchBtn');
+const recipesGrid = document.getElementById('recipesGrid');
+const modal = document.getElementById('modal');
 const closeModal = document.getElementById('closeModal');
 
-searchInput.addEventListener('input', () => {
-    const query = searchInput.value.trim();
-    if (query.length > 2) {
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const sliderMenu = document.getElementById('sliderMenu');
+
+    hamburgerBtn.addEventListener('click', () => {
+        sliderMenu.classList.toggle('hidden');
+        sliderMenu.classList.toggle('visible');
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!sliderMenu.contains(event.target) && event.target !== hamburgerBtn) {
+            sliderMenu.classList.add('hidden');
+            sliderMenu.classList.remove('visible');
+        }
+    });
+});
+
+searchBtn.addEventListener('click', () => {
+    const query = searchBar.value.trim();
+    if (query) {
         fetchRecipes(query);
     }
 });
 
-async function fetchRecipes(query) {
-    const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${API_KEY}`);
-    const data = await response.json();
-    displayRecipes(data.results);
+function fetchRecipes(query) {
+    fetch(`https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${apiKey}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("API Response:", data); // Debug log
+            if (data.results && Array.isArray(data.results)) {
+                displayRecipes(data.results);
+            } else {
+                console.error("Invalid response structure or no recipes found");
+                recipesGrid.innerHTML = '<p>No recipes found. Try another search!</p>';
+            }
+        })
+        .catch(err => {
+            console.error("Error fetching recipes:", err);
+            recipesGrid.innerHTML = '<p>Failed to fetch recipes. Please try again later.</p>';
+        });
 }
 
 function displayRecipes(recipes) {
-    recipeGrid.innerHTML = '';
+    if (!recipes || recipes.length === 0) {
+        recipesGrid.innerHTML = '<p>No recipes to display. Try searching for something else.</p>';
+        return;
+    }
+
+    recipesGrid.innerHTML = '';
     recipes.forEach(recipe => {
         const recipeCard = document.createElement('div');
-        recipeCard.classList.add('recipe-card');
+        recipeCard.className = 'recipe-card';
         recipeCard.innerHTML = `
             <img src="${recipe.image}" alt="${recipe.title}">
             <h3>${recipe.title}</h3>
+            
         `;
         recipeCard.addEventListener('click', () => fetchRecipeDetails(recipe.id));
-        recipeGrid.appendChild(recipeCard);
+        recipesGrid.appendChild(recipeCard);
     });
 }
 
-async function fetchRecipeDetails(id) {
-    const response = await fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`);
-    const data = await response.json();
-    showRecipeDetails(data);
+function fetchRecipeDetails(id) {
+    fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`)
+        .then(response => response.json())
+        .then(data => showRecipeDetails(data))
+        .catch(err => console.error(err));
 }
 
 function showRecipeDetails(recipe) {
-    recipeDetails.innerHTML = `
-        <h2>${recipe.title}</h2>
-        <img src="${recipe.image}" alt="${recipe.title}" style="width: 100%;">
-        <h3>Ingredients</h3>
-        <ul>
-            ${recipe.extendedIngredients.map(ing => `<li>${ing.original}</li>`).join('')}
-        </ul>
-        <h3>Instructions</h3>
-        <p>${recipe.instructions}</p>
-        <h3>Nutrition</h3>
-        <p>Calories: ${recipe.nutrition.nutrients.find(n => n.name === 'Calories').amount} kcal</p>
-    `;
-    recipeModal.style.display = 'flex';
+    modal.classList.remove('hidden');
+    document.getElementById('recipeTitle').innerText = recipe.title;
+    document.getElementById('recipeDesc').innerText = recipe.summary;
+    document.getElementById('ingredients').innerHTML = recipe.extendedIngredients.map(ing => `<li>${ing.original}</li>`).join('');
+    document.getElementById('instructions').innerHTML = recipe.analyzedInstructions[0]?.steps.map(step => `<li>${step.step}</li>`).join('') || '<li>No instructions available</li>';
 }
 
 closeModal.addEventListener('click', () => {
-    recipeModal.style.display = 'none';
+    modal.classList.add('hidden');
 });
 
-// Favorites logic with localStorage can be added here.
+modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        modal.classList.add('hidden');
+    }
+});
+

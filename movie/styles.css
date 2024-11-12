@@ -487,6 +487,71 @@ main {
 }
 
 /* Responsive Design */
+
+/* Hamburger Menu */
+.hamburger-menu {
+    position: relative;
+}
+
+.hamburger-btn {
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000;
+}
+
+.hamburger-btn:hover {
+    color: #007bff;
+}
+
+.slider-menu {
+    position: fixed;
+    top: 0;
+    left: -250px; /* Hidden initially */
+    width: 250px;
+    height: 100%;
+    background-color: #282828;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: left 0.3s ease;
+    z-index: 999;
+    padding-top: 4rem;
+}
+
+.slider-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.slider-menu ul li {
+    padding: 1rem;
+    text-align: center;
+}
+
+.slider-menu ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    display: block;
+}
+
+.slider-menu ul li a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.slider-menu.hidden {
+    left: -250px; /* Keep it hidden */
+}
+
+.slider-menu.visible {
+    left: 0; /* Slide in */
+}
 @media (max-width: 768px) {
     #searchBar {
         width: 80%;
